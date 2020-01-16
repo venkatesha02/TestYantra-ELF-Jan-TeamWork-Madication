@@ -1,82 +1,28 @@
-// import React from 'react';
-// //import Button from '@material-ui/core/Button';
-// import Snackbar from '@material-ui/core/Snackbar';
-// //import Slide from '@material-ui/core/Slide';
-
-
-
-// export default function SnackBar(props) {
-//   const [open, setOpen] = React.useState(false);
-//   const [transition, setTransition] = React.useState(undefined);
-
-//   const handleClick = Transition => () => {
-//     setTransition(() => Transition);
-//     setOpen(true);
-//   };
-
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
-
-//   return (
-//     <div>
-      
-//       <Snackbar
-//         open={props.open}
-//         onClose={handleClose}
-//         TransitionComponent={transition}
-//         message={props.message}
-//       />
-//     </div>
-//   );
-// }
-
 import React from 'react';
-import Button from '@material-ui/core/Button';
+//import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
-import { makeStyles } from '@material-ui/core/styles';
+//import Slide from '@material-ui/core/Slide';
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    '& > * + *': {
-      marginTop: theme.spacing(2),
-    },
-  },
-}));
-
-export default function CustomizedSnackbars(props) {
-  const classes = useStyles();
+export default function SnackBar(props) {
   const [open, setOpen] = React.useState(false);
+  const [transition, setTransition] = React.useState(undefined);
 
-  const handleClick = () => {
-    setOpen(true);
-  };
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
+  const handleClose = () => {
     setOpen(false);
   };
 
   return (
-    <div className={classes.root}>
-      <Button variant="outlined" onClick={handleClick}>
-        Open success snackbar
-      </Button>
-      <Snackbar open={props.open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success">
-          {props.message}
-        </Alert>
-      </Snackbar>
-      
+    <div>
+
+      <Snackbar
+        style={{backgroundColor:'blue'}}
+        open={props.open}
+        onClose={handleClose}
+        autoHideDuration={2000}
+        TransitionComponent={transition}
+        message={props.message}
+      />
     </div>
   );
 }

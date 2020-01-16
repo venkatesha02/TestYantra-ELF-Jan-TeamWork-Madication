@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Search from '../search/Search'
 import Axios from 'axios';
-import GreenSnackBar from '../snackBar/GreenSnackBar';
 import SnackBar from '../snackBar/SnackBar';
 
 export default function Home(props) {
@@ -108,7 +107,6 @@ export default function Home(props) {
     return (
         <>
             <SnackBar open={open.open} message={open.message} />
-            <GreenSnackBar/>
             <Search inputSearch={inputs} />
             <div id="carouselId" className="carousel slide" data-ride="carousel">
                 <ol className="carousel-indicators">
@@ -162,7 +160,7 @@ export default function Home(props) {
                                 <>
                                     <button style={{ background: 'orange', color: 'white' }}
                                         onClick={() => {
-                                            setOpen({ open: true, message: 'Please Login' })
+                                            setOpen({ open: true, message: 'Please Login!!' })
                                             setTimeout(() => {
                                                 props.history.push('/login')
                                             }, 1000);
@@ -173,7 +171,7 @@ export default function Home(props) {
                                     <button
                                         style={{ background: 'blue', color: 'white' }}
                                         onClick={() => {
-                                            setOpen({ open: true, message: 'Please Login' })
+                                            setOpen({ open: true, message: 'Please Login!!' })
                                             setTimeout(() => {
                                                 props.history.push('/login')
                                             }, 1000);
