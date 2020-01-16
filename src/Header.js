@@ -46,16 +46,23 @@ export default function Header(props) {
 
                                     if (status === 'true') {
 
-                                    if (context.user  /* && status === 'true'*/) {
+                                        // if (context.user  /* && status === 'true'*/) {
                                             return (
                                                 <>
                                                     <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-                                                         {/*<li className="nav-item active ">
+                                                        {/*<li className="nav-item active ">
                                                             <Link className="nav-link" to='/showProduct'><i className="fa fa-binoculars">Product</i></Link>
-                                                        </li>
+                                                        </li>*/}
                                                         <li className="nav-item active ">
-                                                            <Link className="nav-link" to='/myWishlist'><i className="fa fa-heart">My Wishlist</i></Link>
-                                                        </li> */}
+                                                            <Link className="nav-link" to='/addProduct'><i>Add Product</i></Link>
+                                                        </li> 
+                                                        <li className="nav-item active ">
+                                                            <Link className="nav-link" to='/userAccountView'><i className="fa fa-user">User List</i></Link>
+                                                         </li>
+                                                         <li className="nav-item active ">
+                                                             <Link className="nav-link" to='/productView'><i className="fa list">Products List</i></Link>
+                                                         </li>
+                                                        
                                                         <li className="nav-item active ">
                                                             <Link className="nav-link" to='/myCart'><i className="fa fa-cart-plus">My cart</i></Link>
                                                         </li>
@@ -78,45 +85,45 @@ export default function Header(props) {
                                                     </ul>
                                                 </>)
                                         }
-                                        else {
-                                            return (
-                                                <>
-                                                    <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+                                        // else {
+                                        //     return (
+                                        //         <>
+                                        //             <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
 
-                                                        <li className="nav-item active ">
-                                                            <Link className="nav-link" to='/addProduct'><i className="fa fa-plus-circle">Add Product</i></Link>
-                                                        </li>
-                                                         <li className="nav-item active ">
-                                                            <Link className="nav-link" to='/userAccountView'><i className="fa fa-user">User List</i></Link>
-                                                        </li>
-                                                        <li className="nav-item active ">
-                                                            <Link className="nav-link" to='/productView'><i className="fa list">Products List</i></Link>
-                                                        </li>
-                                                       {/* <li className="nav-item active ">
-                                                            <Link className="nav-link" to='/myCart'><i className="fa fa-cart-plus">My cart</i></Link>
-                                                        </li> */}
-                                                        <li className="nav-item active ">
-                                                            <Link className="nav-link" to='/myAccount'><i className="fa fa-user-circle">My Account</i></Link>
-                                                        </li>
-                                                        {/* <li className="nav-item active ">
-                                                            <Link className="nav-link" to='/placeOrder'><i className="fa ">Placed Order</i></Link>
-                                                        </li> */}
-                                                    </ul>
-                                                    <ul className='navbar-nav'>
-                                                        {/* <Link className="nav-link active" to='/' onClick={() => context.setLogin(false)}><i className="fa fa-sign-out">Logout</i></Link> */}
-                                                        <li className="nav-item active ">
-                                                            <Link className="nav-link" ><i className='fa'>Welcome {name}</i></Link>
-                                                        </li>
-                                                        <li>
-                                                            <Link className="nav-link active" to='/' onClick={() => logout(context)}><i className="fa fa-sign-out">Logout</i></Link>
-                                                        </li>
-                                                        {/* <Link className="nav-link active" to='/' onClick={() => logout(context)}><i className="fa fa-sign-out">Logout</i></Link> */}
-                                                    </ul>
-                                                </>
-                                            )
-                                        }
+                                        //                 <li className="nav-item active ">
+                                        //                     <Link className="nav-link" to='/addProduct'><i className="fa fa-plus-circle">Add Product</i></Link>
+                                        //                 </li>
+                                        //                  <li className="nav-item active ">
+                                        //                     <Link className="nav-link" to='/userAccountView'><i className="fa fa-user">User List</i></Link>
+                                        //                 </li>
+                                        //                 <li className="nav-item active ">
+                                        //                     <Link className="nav-link" to='/productView'><i className="fa list">Products List</i></Link>
+                                        //                 </li>
+                                        //                {/* <li className="nav-item active ">
+                                        //                     <Link className="nav-link" to='/myCart'><i className="fa fa-cart-plus">My cart</i></Link>
+                                        //                 </li> */}
+                                        //                 <li className="nav-item active ">
+                                        //                     <Link className="nav-link" to='/myAccount'><i className="fa fa-user-circle">My Account</i></Link>
+                                        //                 </li>
+                                        //                 {/* <li className="nav-item active ">
+                                        //                     <Link className="nav-link" to='/placeOrder'><i className="fa ">Placed Order</i></Link>
+                                        //                 </li> */}
+                                        //             </ul>
+                                        //             <ul className='navbar-nav'>
+                                        //                 {/* <Link className="nav-link active" to='/' onClick={() => context.setLogin(false)}><i className="fa fa-sign-out">Logout</i></Link> */}
+                                        //                 <li className="nav-item active ">
+                                        //                     <Link className="nav-link" ><i className='fa'>Welcome {name}</i></Link>
+                                        //                 </li>
+                                        //                 <li>
+                                        //                     <Link className="nav-link active" to='/' onClick={() => logout(context)}><i className="fa fa-sign-out">Logout</i></Link>
+                                        //                 </li>
+                                        //                 {/* <Link className="nav-link active" to='/' onClick={() => logout(context)}><i className="fa fa-sign-out">Logout</i></Link> */}
+                                        //             </ul>
+                                        //         </>
+                                        //     )
+                                        // }
 
-                                    }
+                                    //}
                                     else {
                                         return (
                                             <>
@@ -152,10 +159,10 @@ export default function Header(props) {
                 <Route path='/myCart' component={MyCart} />
                 <Route path='/myAccount' component={MyAccount} />
                 <Route path='/placeOrder' component={PlaceOrder} />
-                <Route path='/checkout' component={Checkout}/>
-                <Route path='/userAccountView' component={UserAccountView}/>
-                <Route path='/productView' component={ProductView}/>
-            
+                <Route path='/checkout' component={Checkout} />
+                <Route path='/userAccountView' component={UserAccountView} />
+                <Route path='/productView' component={ProductView} />
+
             </> : <p style={{ display: 'none' }} className='col-md-4 col-sm-6 mt-5 offset-2'><img src='oops.png' alt='err' /></p>}
         </Router >
     )

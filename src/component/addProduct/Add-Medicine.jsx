@@ -247,12 +247,14 @@ export default function SignUp(props) {
 
         if (event.target.name === 'price') {
 
-            if (price.trim().match(/(\d+\.\d{1,2})/g) && price !== "") {
-                setPriceErr({
-                    ...priceErr,
-                    priErr: '',
-                    pErr: false
-                })
+            if (price.trim().match(/(\d+\.\d{1,2})/g) || price.trim().match(/^[0-9]+$/)) {
+                if (price !== "") {
+                    setPriceErr({
+                        ...priceErr,
+                        priErr: '',
+                        pErr: false
+                    })
+                }
             }
             else {
                 setPriceErr({
@@ -368,11 +370,11 @@ export default function SignUp(props) {
     return (
         <>
             {/* <Container component="main" maxWidth="xs"> */}
-                <CssBaseline />
-                <div className={classes.paper}>
-                <div className='card card-body col-md-6'>
+            <CssBaseline />
+            <div className={classes.paper}>
+                <div className='card mt-3 card-body col-md-6'>
 
-                    <h1 className='text-center p-3'>Add Product</h1>
+                    <h1 className='text-center'>Add Product</h1>
                     <Grid md={12} >
 
                         <form onSubmit={istrue} className={classes.form} noValidate>
@@ -494,12 +496,12 @@ export default function SignUp(props) {
                                     <p style={{ color: 'red', fontSize: '12px' }}>{productImageErr.proImgErr}</p>
                                 </Grid>
 
-                                <Grid item xs={6}>
+                                {/* <Grid item xs={6}>
                                     <FormControlLabel
                                         control={<Checkbox value="remember" color="primary" />}
                                         label="Terms and condition"
                                     />
-                                </Grid>
+                                </Grid> */}
                             </Grid>
 
                             <Button
@@ -514,10 +516,10 @@ export default function SignUp(props) {
                         </form>
                     </Grid>
                 </div>
-                </div>
-                <Box mt={5}>
-                    <Copyright />
-                </Box>
+            </div>
+            <Box mt={5}>
+                <Copyright />
+            </Box>
             {/* </Container> */}
         </>
     );

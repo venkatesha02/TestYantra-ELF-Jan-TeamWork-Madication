@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Search from '../search/Search'
 import Axios from 'axios';
 import SnackBar from '../snackBar/SnackBar';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 export default function Home(props) {
 
@@ -74,16 +75,10 @@ export default function Home(props) {
     }
 
     const [open, setOpen] = useState({ open: false, message: '' })
+
     let addTocart = async (val) => {
 
-        if (val.id === items.all.id) {
-            setItems({
-                all: val
-            })
-        }
-
         const url = `https://react-medical-app.firebaseio.com/cartList-${mobile}.json`
-
         try {
             const response = await Axios.post(url, val)
 
@@ -108,7 +103,7 @@ export default function Home(props) {
         <>
             <SnackBar open={open.open} message={open.message} />
             <Search inputSearch={inputs} />
-            <div id="carouselId" className="carousel slide" data-ride="carousel">
+            <div id="carouselId" className="carousel slide carousel-fade" data-ride="carousel">
                 <ol className="carousel-indicators">
                     <li data-target="#carouselId" data-slide-to="0" className="active"></li>
                     <li data-target="#carouselId" data-slide-to="1"></li>
@@ -117,16 +112,32 @@ export default function Home(props) {
                 </ol>
                 <div className="carousel-inner" role="listbox">
                     <div className="carousel-item">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcLbFnnhUOHFevzvze9FpeR1i_ClI3QiRjxVC-5mVwVwISEaSIiQ&s" width="100%" height='300' alt="Second slide" />
+                        <img src="http://bit.ly/2uRFyKN"
+                         width="100%" 
+                         className="d-block w-100" 
+                         height='300' 
+                         alt="Second slide" />
                     </div>
                     <div className="carousel-item active">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5f90SKMoMU2hi0LdTaXDKPjs-B0ZXjiHoKcuhRlSK_6y9PiXA0Q&s" width="100%" height='300px' alt="First slide" />
+                        <img src="http://bit.ly/2QXDnOx" 
+                        width="100%" 
+                        className="d-block w-100" 
+                        height='300px' 
+                        alt="First slide" />
                     </div>
                     <div className="carousel-item">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwcr3mbMPaerNXszkS4T4s-QSChERUVXCE9aJPJUhZkNIfRJQQ&s" width="100%" height='300px' alt="Third slide" />
+                        <img src="http://bit.ly/2TvGsHc" 
+                        width="100%" 
+                        className="d-block w-100" 
+                        height='300px' 
+                        alt="Third slide" />
                     </div>
                     <div className="carousel-item">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFed-OPFTf28BavMj_psY5DoFfyRUibPrD1rLoU1XL0dg3pQ0I&s" width="100%" height='300px' alt="Third slide" />
+                        <img src="http://bit.ly/2Rz7Dyr" 
+                        width="100%" 
+                        className="d-block w-100" 
+                        height='300px' 
+                        alt="Third slide" />
                     </div>
                 </div>
                 <a className="carousel-control-prev" href="#carouselId" role="button" data-slide="prev">
@@ -162,10 +173,13 @@ export default function Home(props) {
                                         onClick={() => {
                                             setOpen({ open: true, message: 'Please Login!!' })
                                             setTimeout(() => {
-                                                props.history.push('/login')
-                                            }, 1000);
+                                                setOpen({ open: false })
+                                                //props.history.push('/login')
+                                            }, 2000);
                                         }}
-                                        className="btn ">Buy Now
+                                        className="btn ">
+                                            <AddShoppingCartIcon/>
+                                            Buy Now
                                     </button>
 
                                     <button
@@ -173,8 +187,9 @@ export default function Home(props) {
                                         onClick={() => {
                                             setOpen({ open: true, message: 'Please Login!!' })
                                             setTimeout(() => {
-                                                props.history.push('/login')
-                                            }, 1000);
+                                                setOpen({ open: false })
+                                                //props.history.push('/login')
+                                            }, 2000);
                                         }}
                                         className="btn ml-5">Add to Cart
                                     </button>

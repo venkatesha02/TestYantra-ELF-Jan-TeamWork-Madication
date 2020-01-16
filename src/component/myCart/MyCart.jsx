@@ -3,7 +3,8 @@ import Axios from 'axios'
 import { useState } from 'react'
 
 export default function MyCart(props) {
-    const uniqId = localStorage.getItem('id')
+    //const uniqId = localStorage.getItem('id')
+    const mobile = localStorage.getItem('mobile')
 
     const [items, setItems] = useState({ allData: [] })
 
@@ -15,18 +16,31 @@ export default function MyCart(props) {
 
     // Getting data from server
     let getAllAccounts = async () => {
-        const url = `https://react-magicshopping.firebaseio.com/users/${uniqId}/product.json`
+
+        const url = `https://react-medical-app.firebaseio.com/cartList-${mobile}.json`
         try {
             const response = await Axios.get(url)
-            let data = response.data
 
-            let filt = data.filter(val => { return val.cart === true })
-
+            let fetchedAccount = []
             if (response.status === 200) {
-                setItems({
-                    ...items.allData,
-                    allData: filt
-                })
+                console.log(response)
+                for (let key in response.data) {
+                    let account = response.data[key]
+
+                    fetchedAccount.push({
+                        ...account,
+                        id: key,
+                        total:account.price
+                        
+                    })
+
+                    setItems({
+                        ...items.allData,
+                        allData: fetchedAccount,
+                    })
+
+                    console.log('Data Added')
+                }
             }
         }
         catch (err) {
@@ -49,48 +63,44 @@ export default function MyCart(props) {
     }
 
 
-    let removeCart = async (e) => {
-        let data = [...items.allData]
-        data.map(val => {
-            if (val.id === e.id) {
-                return val.cart = !e.cart
-            }
-            return val
-        })
-        setItems({
-            ...items.allData,
-            allData: data
-        })
-        //const wishItem = val
-        const url = `https://react-magicshopping.firebaseio.com/users/${uniqId}/product.json`
+    let removeCart = async (val) => {
+
+        const url = `https://react-medical-app.firebaseio.com/cartList-${mobile}/${val.id}.json`
 
         try {
-            const response = await Axios.put(url, data)
+            const response = await Axios.delete(url)
             if (response.status === 200) {
-                console.log('Data updated', response)
+
+                const myAccount = [...items.allData]
+
+                const index = myAccount.indexOf(val)
+    
+                myAccount.splice(index, 1)
+    
+                setItems({
+                    allData:myAccount
+                })
+                
             } else {
                 console.log("Err")
             }
         }
         catch (err) {
             console.log("Err", err)
-
         }
     }
+
     let rs = 0;
     let tc = 0;
 
-
     let handleClose = () => {
-        
+
         items.allData.map((val) => {
             removeCart(val)
-            
         })
         //props.history.push('/placeOrder')
     }
 
-    
     return (
         <>
             <div className='container' >
@@ -103,16 +113,16 @@ export default function MyCart(props) {
                                     <div key={val.id} className='card mt-2'>
                                         <div className='card-body'>
                                             <div className='col-md-3 float-right'>
-                                                <img className='card-img-top p-1' width='100%' height='120px' src={val.img} alt='pimg' ></img>
+                                                <img className='card-img-top p-1' width='100%' height='120px' src={val.productImage} alt='' ></img>
                                             </div>
-                                            <p className='card-text'><h5>{val.itemName}</h5></p>
-                                            <p className='card-text'><h5>{val.brand}</h5></p>
-                                            <p className='card-text'><h5>Rs. {val.price}</h5></p>
-                                            <p className='card-text'><h5>Total Amount . {val.total}</h5></p>
+                                            <b><p className='card-text' style={{fontSize:'25px'}}>{val.productName}</p></b>
+                                            <p className='card-text'>{val.companyName}</p>
+                                            <p className='card-text'>Rs. {val.price}</p>
+                                            <p className='card-text'>Total Amount : {val.total}</p>
 
                                             <p style={{ display: 'none' }}>{rs = rs + Number(val.total), tc = tc + Number(val.price)}</p>
 
-                                            <select className="form-control col-md-4" value={val.noq} onChange={(e) => { qut(e.target.value, val) }} name='quantity' required>
+                                            <select className="form-control col-md-4" value={val.quantity} onChange={(e) => { qut(e.target.value, val) }} name='quantity' required>
                                                 <option disabled >Quantity</option>
                                                 <option value='1' selected>1</option>
                                                 <option value='2'>2</option>
@@ -137,7 +147,7 @@ export default function MyCart(props) {
                             <p style={{ display: 'none' }}>{localStorage.setItem('total', rs)}</p>
 
                             <p className='card-text'><h5>Payable Amount : {rs}</h5></p>
-                            <button type="button" className='btn btn-outline-success ml-2' data-toggle="modal" onClick={()=>{props.history.push("/checkout")}} data-target="#myModal">Place order</button>
+                            <button type="button" className='btn btn-outline-success ml-2' data-toggle="modal" onClick={() => { props.history.push("/checkout") }} data-target="#myModal">Place order</button>
 
                         </div>
                     </div>
