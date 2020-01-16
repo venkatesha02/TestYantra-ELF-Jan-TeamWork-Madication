@@ -15,10 +15,10 @@ import Checkout from './component/checkout/Checkout'
 // import Search from './component/search/Search';
 
 export default function Header(props) {
-    const context = useContext(UserContext)
+    //const context = useContext(UserContext)
 
     let status = localStorage.getItem('status')
-    let name = localStorage.getItem('userName')
+    let name = localStorage.getItem('name')
 
     let logout = (context) => {
         context.setLogin(false)
@@ -46,14 +46,14 @@ export default function Header(props) {
 
                                     if (status === 'true') {
 
-                                        if (context.user && status === 'true') {
+                                    if (context.user  /* && status === 'true'*/) {
                                             return (
                                                 <>
                                                     <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-                                                        <li className="nav-item active ">
+                                                         {/*<li className="nav-item active ">
                                                             <Link className="nav-link" to='/showProduct'><i className="fa fa-binoculars">Product</i></Link>
                                                         </li>
-                                                        {/* <li className="nav-item active ">
+                                                        <li className="nav-item active ">
                                                             <Link className="nav-link" to='/myWishlist'><i className="fa fa-heart">My Wishlist</i></Link>
                                                         </li> */}
                                                         <li className="nav-item active ">
@@ -148,16 +148,14 @@ export default function Header(props) {
 
             {status ? <>
                 <Route path='/addProduct' component={AddProduct} />
-                <Route path='/showProduct' component={ShowProduct} />
-                {/* <Route path='/myWishlist' component={WishList} /> */}
+                {/* <Route path='/showProduct' component={ShowProduct} /> */}
                 <Route path='/myCart' component={MyCart} />
                 <Route path='/myAccount' component={MyAccount} />
                 <Route path='/placeOrder' component={PlaceOrder} />
                 <Route path='/checkout' component={Checkout}/>
                 <Route path='/userAccountView' component={UserAccountView}/>
                 <Route path='/productView' component={ProductView}/>
-                
-                
+            
             </> : <p style={{ display: 'none' }} className='col-md-4 col-sm-6 mt-5 offset-2'><img src='oops.png' alt='err' /></p>}
         </Router >
     )

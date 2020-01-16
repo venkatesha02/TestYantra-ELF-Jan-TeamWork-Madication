@@ -10,7 +10,7 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+//import Container from '@material-ui/core/Container';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import { FormLabel, Checkbox } from '@material-ui/core';
@@ -31,7 +31,7 @@ function Copyright() {
 
 const useStyles = makeStyles(theme => ({
     paper: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(4),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     },
     form: {
         width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(3),
+        marginTop: theme.spacing(1),
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
@@ -66,7 +66,7 @@ export default function SignUp(props) {
     const [conPassErr, setConPassErr] = useState({ cpErr: true, conPassErr: '' })
 
 
-const data = {
+    const data = {
         userName: userName,
         userEmail: userEmail,
         userMobile: userMobile,
@@ -81,10 +81,10 @@ const data = {
         const url = 'https://react-medical-app.firebaseio.com/addUser.json'
         try {
             let response = await Axios.post(url, formData)//it is a api call it returns a promise
-       
+
             if (response.status === 200) {
                 props.history.push('/login')
-                   
+
             }
         }
         catch (err) {
@@ -145,11 +145,11 @@ const data = {
                     genErr: `Select Gender`
                 })
             }
-            else{
+            else {
                 setGenderErr({
                     ...genderErr,
-                    genErr:'',
-                    gErr:false
+                    genErr: '',
+                    gErr: false
                 })
             }
 
@@ -324,142 +324,150 @@ const data = {
 
     const classes = useStyles();
     return (
-        <Container component="main" maxWidth="xs">
+        <>
+            {/* <Container component="main" maxWidth="xs"> */}
             <CssBaseline />
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign up
-        </Typography>
-                <form onSubmit={istrue} className={classes.form} noValidate>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                name="userName"
-                                autoComplete="fname"
-                                variant="outlined"
-                                required
+            <div className="col-md-6 offset-3 mt-3 card card-body">
+                <div className={classes.paper}>
+
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign up
+                    </Typography>
+
+                    <Grid md={12}>
+                        <form onSubmit={istrue} className={classes.form} noValidate>
+                            <Grid container spacing={2}>
+                                <Grid item xs={6}>
+                                    <TextField
+                                        name="userName"
+                                        autoComplete="fname"
+                                        //variant="outlined"
+                                        required
+                                        fullWidth
+                                        label="User Name"
+                                        autoFocus
+                                        value={userName}
+                                        onKeyUp={(e) => validForm(e)}
+                                        onChange={(e) => { setUserName(e.target.value) }}
+                                    />
+                                    <p style={{ color: 'red', fontSize: '12px' }}>{userNameErr.nameErr}</p>
+
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <TextField
+                                        name='userEmail'
+                                        autoComplete="userEmail"
+                                        //variant="outlined"
+                                        required
+                                        fullWidth
+                                        label="Email Address"
+                                        //autoFocus
+                                        onKeyUp={(e) => validForm(e)}
+                                        value={userEmail}
+                                        onChange={(e) => { setUserEmail(e.target.value) }}
+                                    />
+                                    <p style={{ color: 'red', fontSize: '12px' }}>{userEmailErr.emailErr}</p>
+
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <TextField
+                                        //variant="outlined"
+                                        required
+                                        fullWidth
+                                        name='userMobile'
+                                        label="Phone Number"
+                                        autoComplete="-phone-number"
+                                        maxLength='10'
+                                        onKeyUp={(e) => validForm(e)}
+                                        value={userMobile}
+                                        onChange={(e) => { setUserMobile(e.target.value) }}
+                                    />
+                                    <p style={{ color: 'red', fontSize: '12px' }}>{userMobileErr.mobileErr}</p>
+
+                                </Grid>
+
+                                <Grid item xs={6}>
+                                    <FormLabel component="legend">Gender</FormLabel>
+                                    <RadioGroup aria-label="position" name="gender" row>
+                                        <FormControlLabel value="Male" onChange={(e) => { setGender(e.target.value) }} control={<Radio />} label="Male" />
+                                        <FormControlLabel value="Female" onChange={(e) => { setGender(e.target.value) }} control={<Radio />} label="Female" />
+                                        <FormControlLabel value="Other" onChange={(e) => { setGender(e.target.value) }} control={<Radio />} label="Other" />
+                                    </RadioGroup>
+                                    <p style={{ color: 'red', fontSize: '12px' }}>{genderErr.genErr}</p>
+
+                                </Grid>
+
+                                <Grid item xs={6}>
+                                    <TextField
+                                        name='userPass'
+                                        //variant="outlined"
+                                        type="password"
+                                        required
+                                        fullWidth
+                                        label="Password"
+                                        autoComplete="current-password"
+                                        onKeyUp={(e) => validForm(e)}
+                                        value={userPass}
+                                        onChange={(e) => { setUserPass(e.target.value) }}
+                                    />
+                                    <p style={{ color: 'red', fontSize: '12px' }}>{userPassErr.passErr}</p>
+
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <TextField
+                                        name='conPass'
+                                        //variant="outlined"
+                                        type="password"
+                                        required
+                                        fullWidth
+                                        label="Confirm-Password"
+                                        autoComplete="current-password"
+                                        onKeyUp={(e) => validForm(e)}
+                                        value={conPass}
+                                        onChange={(e) => { setConPass(e.target.value) }}
+                                    />
+                                    <p style={{ color: 'red', fontSize: '12px' }}>{conPassErr.conPassErr}</p>
+                                </Grid>
+
+                                <Grid item xs={12}>
+
+                                    <FormControlLabel
+                                        control={<Checkbox value="remember" color="primary" />}
+                                        label="Terms and condition"
+                                    />
+
+                                </Grid>
+
+                            </Grid>
+
+                            <Button
+                                type="submit"
                                 fullWidth
-                                label="User Name"
-                                autoFocus
-                                value={userName}
-                                onKeyUp={(e) => validForm(e)}
-                                onChange={(e) => { setUserName(e.target.value) }}
-                            />
-                            <p style={{ color: 'red', fontSize: '12px' }}>{userNameErr.nameErr}</p>
-
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                name='userEmail'
-                                autoComplete="userEmail"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                label="Email Address"
-                                //autoFocus
-                                onKeyUp={(e) => validForm(e)}
-                                value={userEmail}
-                                onChange={(e) => { setUserEmail(e.target.value) }}
-                            />
-                            <p style={{ color: 'red', fontSize: '12px' }}>{userEmailErr.emailErr}</p>
-
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name='userMobile'
-                                label="Phone Number"
-                                autoComplete="-phone-number"
-                                maxLength='10'
-                                onKeyUp={(e) => validForm(e)}
-                                value={userMobile}
-                                onChange={(e) => { setUserMobile(e.target.value) }}
-                            />
-                            <p style={{ color: 'red', fontSize: '12px' }}>{userMobileErr.mobileErr}</p>
-
-                        </Grid>
-
-                        <Grid item xs={12}>
-                            <FormLabel component="legend">Gender</FormLabel>
-                            <RadioGroup aria-label="position" name="gender" row>
-                                <FormControlLabel value="Male" onChange={(e) => { setGender(e.target.value) }} control={<Radio />} label="Male" />
-                                <FormControlLabel value="Female" onChange={(e) => { setGender(e.target.value) }} control={<Radio />} label="Female" />
-                                <FormControlLabel value="Other" onChange={(e) => { setGender(e.target.value) }} control={<Radio />} label="Other" />
-                            </RadioGroup>
-                            <p style={{ color: 'red', fontSize: '12px' }}>{genderErr.genErr}</p>
-
-                        </Grid>
-
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                name='userPass'
-                                variant="outlined"
-                                type="password"
-                                required
-                                fullWidth
-                                label="Password"
-                                autoComplete="current-password"
-                                onKeyUp={(e) => validForm(e)}
-                                value={userPass}
-                                onChange={(e) => { setUserPass(e.target.value) }}
-                            />
-                            <p style={{ color: 'red', fontSize: '12px' }}>{userPassErr.passErr}</p>
-
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                name='conPass'
-                                variant="outlined"
-                                type="password"
-                                required
-                                fullWidth
-                                label="Confirm-Password"
-                                autoComplete="current-password"
-                                onKeyUp={(e) => validForm(e)}
-                                value={conPass}
-                                onChange={(e) => { setConPass(e.target.value) }}
-                            />
-                            <p style={{ color: 'red', fontSize: '12px' }}>{conPassErr.conPassErr}</p>
-                        </Grid>
-
-                        <Grid item xs={12}>
-
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Terms and condition"
-                            />
-
-                        </Grid>
-
-                    </Grid>
-
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    > Sign Up
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                            > Sign Up
                     </Button>
 
-                    <Grid container justify="flex-end">
-                        <Grid item>
-                            <Link variant="body2" style={{ cursor: "pointer" }} onClick={() => props.history.push("/login")}>
-                                Already have an account? Sign in
-                            </Link>
-                        </Grid>
-                    </Grid>
+                            <Grid container justify="flex-end">
+                                <Grid item>
+                                    <Link variant="body2" style={{ cursor: "pointer" }} onClick={() => props.history.push("/login")}>
+                                        <p style={{ color: 'blue' }}>Already have an account? Sign in</p>
+                                    </Link>
+                                </Grid>
+                            </Grid>
 
-                </form>
+                        </form>
+                    </Grid>
+                </div>
             </div>
             <Box mt={5}>
                 <Copyright />
             </Box>
-        </Container>
+            {/* </Container> */}
+        </>
     );
 }

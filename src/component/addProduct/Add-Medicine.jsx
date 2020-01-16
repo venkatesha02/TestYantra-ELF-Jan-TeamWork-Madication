@@ -8,8 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import {  Checkbox, InputLabel, Select } from '@material-ui/core';
+//import Container from '@material-ui/core/Container';
+import { Checkbox, InputLabel, Select } from '@material-ui/core';
 import Axios from 'axios';
 
 function Copyright() {
@@ -28,7 +28,7 @@ function Copyright() {
 
 const useStyles = makeStyles(theme => ({
     paper: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(0),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -72,7 +72,6 @@ export default function SignUp(props) {
         if (!productNameErr.pnErr && !priceErr.pErr && !companyNameErr.cErr && !productImageErr.piErr && !descriptionErr.dErr && !quantityErr.qErr && !typeErr.tErr) {
 
             handleSubmit()
-
             alert('Data Added');
         }
         else {
@@ -246,10 +245,9 @@ export default function SignUp(props) {
         }
 
 
-
         if (event.target.name === 'price') {
 
-            if (price.trim().match(/^[0-9]*$/) && price !== "") {
+            if (price.trim().match(/(\d+\.\d{1,2})/g) && price !== "") {
                 setPriceErr({
                     ...priceErr,
                     priErr: '',
@@ -349,7 +347,7 @@ export default function SignUp(props) {
         const url = 'https://react-medical-app.firebaseio.com/addmedicine.json'
         try {
             let response = await Axios.post(url, formData)//it is a api call it returns a promise
-       
+
             if (response.status === 200) {
                 setProductName('')
                 setCompanyName('')
@@ -358,7 +356,7 @@ export default function SignUp(props) {
                 setProductImage('')
                 setDescription('')
                 setType('')
-                
+
             }
         }
         catch (err) {
@@ -366,159 +364,161 @@ export default function SignUp(props) {
         }
     }
 
-
-
-
     const classes = useStyles();
     return (
         <>
-            <Container component="main" maxWidth="xs">
+            {/* <Container component="main" maxWidth="xs"> */}
                 <CssBaseline />
                 <div className={classes.paper}>
+                <div className='card card-body col-md-6'>
 
                     <h1 className='text-center p-3'>Add Product</h1>
+                    <Grid md={12} >
 
-                    <form onSubmit={istrue} className={classes.form} noValidate>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <TextField
-                                    name="productName"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    label="Product Name"
-                                    autoFocus
-                                    value={productName}
-                                    onKeyUp={(e) => validForm(e)}
-                                    onChange={(e) => { setProductName(e.target.value) }}
-                                />
-                                <p style={{ color: 'red', fontSize: '12px' }}>{productNameErr.pNameErr}</p>
+                        <form onSubmit={istrue} className={classes.form} noValidate>
+                            <Grid container spacing={2}>
 
+                                <Grid item xs={6}>
+                                    <TextField
+                                        name="productName"
+                                        //variant="outlined"
+                                        required
+                                        fullWidth
+                                        label="Product Name"
+                                        autoFocus
+                                        value={productName}
+                                        onKeyUp={(e) => validForm(e)}
+                                        onChange={(e) => { setProductName(e.target.value) }}
+                                    />
+                                    <p style={{ color: 'red', fontSize: '12px' }}>{productNameErr.pNameErr}</p>
+
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <TextField
+                                        name='companyName'
+                                        autoComplete="companyName"
+                                        //variant="outlined"
+                                        required
+                                        fullWidth
+                                        label="Company Name"
+                                        onKeyUp={(e) => validForm(e)}
+                                        value={companyName}
+                                        onChange={(e) => { setCompanyName(e.target.value) }}
+                                    />
+                                    <p style={{ color: 'red', fontSize: '12px' }}>{companyNameErr.comErr}</p>
+
+                                </Grid>
+
+                                <Grid item xs={6}>
+
+                                    <InputLabel >Medicine Type</InputLabel>
+
+                                    <Select
+                                        native
+                                        fullWidth
+                                        name='type'
+                                        //variant="outlined"
+                                        onClick={(e) => validForm(e)}
+                                        value={type}
+                                        onChange={(e) => { setType(e.target.value) }}
+
+                                    >
+                                        {/* <option value='' disabled>Select Medicine Type</option> */}
+                                        <option value='tablet' selected>Tablet</option>
+                                        <option value='syrup'>Syrup</option>
+                                        <option value='powder'>Powder</option>
+                                    </Select>
+                                    <p style={{ color: 'red', fontSize: '12px' }}>{typeErr.typErr}</p>
+
+                                </Grid>
+
+                                <Grid item xs={6}>
+                                    <TextField
+                                        //variant="outlined"
+                                        required
+                                        fullWidth
+                                        name='quantity'
+                                        label="No of Quantity"
+                                        onKeyUp={(e) => validForm(e)}
+                                        value={quantity}
+                                        onChange={(e) => { setQuantity(e.target.value) }}
+                                    />
+                                    <p style={{ color: 'red', fontSize: '12px' }}>{quantityErr.quaErr}</p>
+
+                                </Grid>
+
+                                <Grid item xs={6}>
+                                    <TextField
+                                        name='price'
+                                        //variant="outlined"
+                                        required
+                                        fullWidth
+                                        label="Price"
+                                        onKeyUp={(e) => validForm(e)}
+                                        value={price}
+                                        onChange={(e) => { setPrice(e.target.value) }}
+                                    />
+                                    <p style={{ color: 'red', fontSize: '12px' }}>{priceErr.priErr}</p>
+
+                                </Grid>
+
+                                <Grid item xs={6}>
+                                    <TextField
+                                        name='description'
+                                        //variant="outlined"
+                                        required
+                                        fullWidth
+                                        label="Description"
+                                        onKeyUp={(e) => validForm(e)}
+                                        value={description}
+                                        onChange={(e) => { setDescription(e.target.value) }}
+                                    />
+                                    <p style={{ color: 'red', fontSize: '12px' }}>{descriptionErr.disErr}</p>
+
+                                </Grid>
+
+
+                                <Grid item xs={6}>
+                                    {/* <FormLabel component="legend">Choose Product Image</FormLabel> */}
+                                    <TextField
+                                        name='productImage'
+                                        // variant="outlined"
+                                        type="text"
+                                        required
+                                        fullWidth
+                                        label="Product Image"
+                                        onKeyUp={(e) => validForm(e)}
+                                        value={productImage}
+                                        onChange={(e) => { setProductImage(e.target.value) }}
+                                    />
+                                    <p style={{ color: 'red', fontSize: '12px' }}>{productImageErr.proImgErr}</p>
+                                </Grid>
+
+                                <Grid item xs={6}>
+                                    <FormControlLabel
+                                        control={<Checkbox value="remember" color="primary" />}
+                                        label="Terms and condition"
+                                    />
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    name='companyName'
-                                    autoComplete="companyName"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    label="Company Name"
-                                    onKeyUp={(e) => validForm(e)}
-                                    value={companyName}
-                                    onChange={(e) => { setCompanyName(e.target.value) }}
-                                />
-                                <p style={{ color: 'red', fontSize: '12px' }}>{companyNameErr.comErr}</p>
 
-                            </Grid>
-
-                            <Grid item xs={12}>
-
-                                <InputLabel >Medicine Type</InputLabel>
-
-                                <Select
-                                    native
-                                    fullWidth
-                                    name='type'
-                                    variant="outlined"
-                                    onChangeCapture={(e) => validForm(e)}
-                                    value={type}
-                                    onChange={(e) => { setType(e.target.value) }}
-
-                                >
-                                    <option value='' disabled>Select Type</option>
-                                    <option value='tablet'>Tablet</option>
-                                    <option value='syrup'>Syrup</option>
-                                    <option value='powder'>Powder</option>
-                                </Select>
-                                <p style={{ color: 'red', fontSize: '12px' }}>{typeErr.typErr}</p>
-
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    name='quantity'
-                                    label="No of Quantity"
-                                    onKeyUp={(e) => validForm(e)}
-                                    value={quantity}
-                                    onChange={(e) => { setQuantity(e.target.value) }}
-                                />
-                                <p style={{ color: 'red', fontSize: '12px' }}>{quantityErr.quaErr}</p>
-
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <TextField
-                                    name='price'
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    label="Price"
-                                    onKeyUp={(e) => validForm(e)}
-                                    value={price}
-                                    onChange={(e) => { setPrice(e.target.value) }}
-                                />
-                                <p style={{ color: 'red', fontSize: '12px' }}>{priceErr.priErr}</p>
-
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <TextField
-                                    name='description'
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    label="Description"
-                                    onKeyUp={(e) => validForm(e)}
-                                    value={description}
-                                    onChange={(e) => { setDescription(e.target.value) }}
-                                />
-                                <p style={{ color: 'red', fontSize: '12px' }}>{descriptionErr.disErr}</p>
-
-                            </Grid>
-
-
-                            <Grid item xs={12}>
-                                {/* <FormLabel component="legend">Choose Product Image</FormLabel> */}
-                                <TextField
-                                    name='productImage'
-                                    variant="outlined"
-                                    type="text"
-                                    required
-                                    fullWidth
-                                    label="Product Image"
-                                    onKeyUp={(e) => validForm(e)}
-                                    value={productImage}
-                                    onChange={(e) => { setProductImage(e.target.value) }}
-                                />
-                                <p style={{ color: 'red', fontSize: '12px' }}>{productImageErr.proImgErr}</p>
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    control={<Checkbox value="remember" color="primary" />}
-                                    label="Terms and condition"
-                                />
-                            </Grid>
-                        </Grid>
-
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        > Sign Up
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                            > Add Product
                     </Button>
 
-                    </form>
+                        </form>
+                    </Grid>
+                </div>
                 </div>
                 <Box mt={5}>
                     <Copyright />
                 </Box>
-            </Container>
+            {/* </Container> */}
         </>
     );
 }

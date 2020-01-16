@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import Search from '../search/Search'
 import Axios from 'axios';
+import GreenSnackBar from '../snackBar/GreenSnackBar';
+import SnackBar from '../snackBar/SnackBar';
 
 export default function Home(props) {
 
     const [items, setItems] = useState({ all: [] })
 
+    const [newData, setnewData] = useState({ allnew: [] })
+
+    const isLogin = localStorage.getItem('status')
+
+    const mobile = localStorage.getItem('mobile')
+
     useEffect(() => {
-
         getAllAccounts();
-
-    }, [])
+    })
 
     // Getting all data from server
     let getAllAccounts = async () => {
@@ -31,8 +37,14 @@ export default function Home(props) {
 
                     setItems({
                         ...items.all,
-                        all: fetchedAccount
+                        all: fetchedAccount,
                     })
+
+                    setnewData({
+                        ...newData.allnew,
+                        allnew: fetchedAccount
+                    })
+
                 }
             }
         }
@@ -41,34 +53,63 @@ export default function Home(props) {
         }
     }
 
-    const [product, setProduct] = useState({ data1: [] })
+    const inputs = (event) => {
 
-    const inputs=(event)=>{
-        let allData = items.all
+        let oldData = [...newData.allnew]
 
-        const data = allData.filter(val => val.itemName.startsWith(event))
+        const data = oldData.filter(val => val.productName.toLowerCase().startsWith(event))
         let arr = [];
         for (const key in data) {
             arr.push({
                 ...data[key],
             })
         }
+
         if (arr) {
-            setProduct({
-                ...product.data1,
-                data1: arr
+            console.log(arr)
+            setItems({
+                ...items.all,
+                all: arr
             })
-        } else {
-            setProduct({
-                ...product.data1,
-                data1: []
+        }
+    }
+
+    const [open, setOpen] = useState({ open: false, message: '' })
+    let addTocart = async (val) => {
+
+        if (val.id === items.all.id) {
+            setItems({
+                all: val
             })
+        }
+
+        const url = `https://react-medical-app.firebaseio.com/cartList-${mobile}.json`
+
+        try {
+            const response = await Axios.post(url, val)
+
+            if (response.status === 200) {
+
+                setOpen({
+                    open: true,
+                    message: 'Added to Cart'
+                })
+                setTimeout(() => {
+                    setOpen({ open: false })
+                }, 1000);
+
+            }
+        }
+        catch (err) {
+            console.log("Err", err)
         }
     }
 
     return (
         <>
-            <Search data={inputs}/>
+            <SnackBar open={open.open} message={open.message} />
+            <GreenSnackBar/>
+            <Search inputSearch={inputs} />
             <div id="carouselId" className="carousel slide" data-ride="carousel">
                 <ol className="carousel-indicators">
                     <li data-target="#carouselId" data-slide-to="0" className="active"></li>
@@ -101,20 +142,49 @@ export default function Home(props) {
             </div>
 
             {items.all.map(val => {
+
                 return (
-                    <>
-                        <div className="ml-2 mt-3 card float-left" style={{ width: "18rem" }}>
-                            <div  key={val.id}  className="card-body">
-                                <img height='200px' src={val.productImage} class="card-img-top" alt="..." width='100%'></img>
-                                <h5 className="card-title">{val.productName}</h5>
-                                <p className='card-text'><h5>Rs. {val.price}</h5></p>
-                                <p className='card-text'><h6>Brand : {val.companyName}</h6></p>
-                                <p className='card-text'>{val.description}</p>
-                                <button style={{background:'orange',color:'white'}} onClick={()=>{alert("Login first"); props.history.push('/login')}} className="btn " >Buy Now</button>
-                                <button style={{background:'blue',color:'white'}} onClick={()=>{alert("Login first"); props.history.push('/login')}} className="btn ml-5">Add to Cart</button>
-                            </div>
+
+                    <div className="ml-2 mt-3 card float-left" style={{ width: "18rem" }}>
+                        <div key={val.id} className="card-body">
+                            <img height='200px' src={val.productImage} class="card-img-top" alt="..." width='100%'></img>
+                            <h5 className="card-title">{val.productName}</h5>
+                            <p className='card-text'><h5>Rs. {val.price}</h5></p>
+                            <p className='card-text'><h6>Brand : {val.companyName}</h6></p>
+                            <p className='card-text'>{val.description}</p>
+
+                            {isLogin ?
+                                <>
+                                    <button style={{ background: 'orange', color: 'white' }} onClick={() => { props.history.push('/checkout') }} className="btn " >Buy Now</button>
+                                    <button style={{ background: 'blue', color: 'white' }} onClick={() => addTocart(val)} className="btn ml-5">Add to Cart</button>
+                                </>
+                                :
+                                <>
+                                    <button style={{ background: 'orange', color: 'white' }}
+                                        onClick={() => {
+                                            setOpen({ open: true, message: 'Please Login' })
+                                            setTimeout(() => {
+                                                props.history.push('/login')
+                                            }, 1000);
+                                        }}
+                                        className="btn ">Buy Now
+                                    </button>
+
+                                    <button
+                                        style={{ background: 'blue', color: 'white' }}
+                                        onClick={() => {
+                                            setOpen({ open: true, message: 'Please Login' })
+                                            setTimeout(() => {
+                                                props.history.push('/login')
+                                            }, 1000);
+                                        }}
+                                        className="btn ml-5">Add to Cart
+                                    </button>
+                                </>
+                            }
+
                         </div>
-                    </>
+                    </div>
                 )
             })}
         </>

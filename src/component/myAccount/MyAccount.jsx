@@ -19,6 +19,7 @@ export default function MyAccount(props) {
                     <p className='card-text'><b>Mobile Number: </b>{mobile}</p>
                     <p className='card-text'><b>Gender : </b>{gen}</p>
                 </div>
+                {/* <button className='btn btn-primary mb-3' onClick={()=>props.history.push('/userAccountView')}>Edit Profile</button> */}
 
             </div>
 

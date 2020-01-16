@@ -145,13 +145,13 @@ export default class ProductView extends Component {
                 <table className="table table-striped mt-5 table-hover table-bordered">
                     <thead className='thead-dark'>
                         <tr>
+                            <th>Image</th>
                             <th>Product Name</th>
                             <th>Company Name</th>
                             <th>Quantity</th>
                             <th>Price</th>
                             <th>Description</th>
                             <th>Medicine Type</th>
-                            <th>Image</th>
                             <th>Delete</th>
                             <th>Update</th>
                         </tr>
@@ -160,13 +160,15 @@ export default class ProductView extends Component {
                         {this.state.account.map(account => {
                             return (
                                 <tr key={account.id}>
+                                    <td>
+                                        <img width='50px' height='50px' src={account.productImage} alt=""/>
+                                    </td>
                                     <td>{account.productName}</td>
                                     <td>{account.companyName}</td>
                                     <td>{account.quantity}</td>
-                                    <td>{account.price}</td>
+                                    <td>Rs {account.price}</td>
                                     <td>{account.description}</td>
                                     <td>{account.type}</td>
-                                    <td>{account.productImage}</td>
                                     <td><button className='btn-danger btn'
                                         onClick={() => { this.deleteAccount(account) }}>Delete</button></td>
                                     <td><button className='btn-success btn'
@@ -220,7 +222,7 @@ export default class ProductView extends Component {
                                     className="form-control" type="text"
                                     placeholder="Enter Description"
                                     onChange={this.handleChange}
-                                    value={this.state.price} required />
+                                    value={this.state.description} required />
 
                                     <label >Product Image</label>
                                 <input name="productImage"

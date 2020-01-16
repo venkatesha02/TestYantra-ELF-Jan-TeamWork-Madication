@@ -11,8 +11,9 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+//import Container from '@material-ui/core/Container';
 import UserContext from '../../context/userAuthentication';
+import Axios from 'axios';
 
 function Copyright() {
     return (
@@ -29,7 +30,7 @@ function Copyright() {
 
 const useStyles = makeStyles(theme => ({
     paper: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(0),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -60,10 +61,6 @@ export default function SignIn(props) {
     const [userEmailErr, setUserEmailErr] = useState({ eErr: true, emailErr: '' })
     const [userPassErr, setUserPassErr] = useState({ pErr: true, passErr: '' })
 
-    const valid = {
-        userEmail: userEmail,
-        userPass: userPass
-    }
 
     const isTrue = (event) => {
         event.preventDefault()
@@ -91,7 +88,7 @@ export default function SignIn(props) {
 
 
     const validForm = (event) => {
-        
+
         if (event.target.name === 'userEmail') {
             if (userEmail.trim().match(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i)) {
                 setUserEmailErr({
@@ -152,95 +149,135 @@ export default function SignIn(props) {
         }
     }
 
-    const authenticate = () => {
+    const valid = {
+        userEmail: userEmail,
+        userPass: userPass
+    }
 
-        if (userEmail === 'venkatesh000venki@gmail.com' && userPass === 'Venki@1') {
+    const authenticate = async () => {
 
-            localStorage.setItem('status','true')
-            localStorage.setItem('userName', userEmail)
-            props.history.push('/showProduct')
-            context.setUser(true)
-            context.setLogin(true)
-            alert('Login Success')
+        const url = 'https://react-medical-app.firebaseio.com/addUser.json'
+        try {
 
-        } else {
-        
-            alert('Invalid User Name / Password')
+            const response = await Axios.get(url)
 
+            for (let key in response.data) {
+                let account = response.data[key]
+                let auth = valid
+
+                if (auth.userEmail === account.userEmail && auth.userPass === account.userPass) {
+
+                    localStorage.setItem('email', account.userEmail)
+                    localStorage.setItem('name', account.userName)
+                    localStorage.setItem('mobile', account.userMobile)
+                    localStorage.setItem('gen', account.gender)
+
+                    localStorage.setItem('status', true)
+                    localStorage.setItem('id', account.userMobile)
+
+                    props.history.push('/')
+                    context.setUser(true)
+                    context.setLogin(true)
+
+                }
+                else {
+                    //alert('Invalid User Name / Password')
+                    setIsValid(true)
+                }
+            }
+
+        } catch (err) {
+            console.log("Erroo ", err)
         }
 
     }
 
     return (
-        <Container component="main" maxWidth="xs">
+        <>
+            {/* <Container component="main" maxWidth="xs"> */}
             <CssBaseline />
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign in
-        </Typography>
-                <form className={classes.form} onSubmit={isTrue} noValidate>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        label="Email Address"
-                        name='userEmail'
-                        autoComplete="userEmail"
-                        autoFocus
-                        onKeyUp={(e) => validForm(e)}
-                        value={userEmail}
-                        onChange={(e) => { setUserEmail(e.target.value) }}
-                    />
-                    <p style={{ color: 'red', fontSize: '12px' }}>{userEmailErr.emailErr}</p>
 
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="userPass"
-                        label="Password"
-                        type="password"
-                        onKeyUp={(e) => validForm(e)}
-                        value={userPass}
-                        onChange={(e) => { setUserPass(e.target.value) }}
-                        autoComplete="password"
-                    />
-                    <p style={{ color: 'red', fontSize: '12px' }}>{userPassErr.passErr}</p>
+            <div className='col-md-4 mt-3 offset-4 card card-body'>
+                <div className={classes.paper}>
 
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}>
-                        Sign In
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign in
+                    </Typography>
+
+                    <Grid xs={12}>
+
+                        {isValid ?
+                            <p className="card-text text-center" style={{ color: 'red' }}>
+                                Invalid Email or Password!!</p> : null}
+
+                        <form className={classes.form} onSubmit={isTrue} noValidate>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                label="Email Address"
+                                name='userEmail'
+                                autoComplete="userEmail"
+                                autoFocus
+                                onKeyUp={(e) => validForm(e)}
+                                value={userEmail}
+                                onChange={(e) => { setUserEmail(e.target.value) }}
+                            />
+                            <p style={{ color: 'red', fontSize: '12px' }}>{userEmailErr.emailErr}</p>
+
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="userPass"
+                                label="Password"
+                                type="password"
+                                onKeyUp={(e) => validForm(e)}
+                                value={userPass}
+                                onChange={(e) => { setUserPass(e.target.value) }}
+                                autoComplete="password"
+                            />
+                            <p style={{ color: 'red', fontSize: '12px' }}>{userPassErr.passErr}</p>
+
+                            <FormControlLabel
+                                control={<Checkbox value="remember" color="primary" />}
+                                label="Remember me"
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}>
+                                Sign In
                     </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link variant="body2" style={{ cursor: "pointer", color: 'blue' }}>
-                                Forgot userPassword?
+
+
+                            <Grid container>
+                                <Grid item xs>
+                                    <Link variant="body2" style={{ cursor: "pointer", color: 'blue' }}>
+                                        Forgot Password?
                             </Link>
-                        </Grid>
-                        <Grid item xs>
-                            <Link variant="body2" style={{ cursor: "pointer" }} onClick={() => props.history.push("/createaccount")}>
-                                {"Don't have an account? Sign Up"}
-                            </Link>
-                        </Grid>
+                                </Grid>
+                                <Grid item xs>
+                                    <Link variant="body2" style={{ cursor: "pointer" }} onClick={() => props.history.push("/createaccount")}>
+                                        {"Don't have an account? Sign Up"}
+                                    </Link>
+                                </Grid>
+                            </Grid>
+                        </form>
                     </Grid>
-                </form>
+                </div>
             </div>
             <Box mt={8}>
                 <Copyright />
             </Box>
-        </Container>
+            {/* </Container> */}
+        </>
     );
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header'
 import { UserProvider } from './context/userAuthentication';
+import { Snackbar } from '@material-ui/core';
 
 class App extends React.Component {
   state = {

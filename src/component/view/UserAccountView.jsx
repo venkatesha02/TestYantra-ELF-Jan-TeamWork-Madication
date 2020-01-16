@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
-import { Modal, Button } from 'react-bootstrap'
+// import { Modal, Button } from 'react-bootstrap'
 
 export default class UserAccountView extends Component {
 
@@ -10,32 +10,16 @@ export default class UserAccountView extends Component {
         userEmail: '',
         userMobile: '',
         userPass: '',
-        gender:''
+        gender: '',
+        //isUser: false
+
     }
 
     componentDidMount() {
         this.getAllAccounts()
     }
 
-    handleClose = () => {
-        this.setState({
-            show: !this.state.show,
-        })
-    }
 
-    handleShow = (accToEdit) => {
-        //console.log('Account to be Edited ', accToEdit)
-        this.setState({
-            show: !this.state.show,
-            ...accToEdit
-        })
-    }
-
-    handleChange = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value,
-        })
-    };
 
 
     // Getting data from back-end using Axios api
@@ -66,13 +50,15 @@ export default class UserAccountView extends Component {
             })
     }
 
+   
+
     async deleteAccount(accToDelete) {
 
         const id = accToDelete.id;
         const url = 'https://react-medical-app.firebaseio.com/addUser/' + id + '/.json'
 
         try {
-            const response = await Axios.delete(url)
+            await Axios.delete(url)
             const myAccount = [...this.state.account]
 
             const index = myAccount.indexOf(accToDelete)
@@ -90,49 +76,7 @@ export default class UserAccountView extends Component {
         }
     }
 
-    saveData = async () => {
-        console.log("State Data ", this.state)
-        try {
-           
-            const { userName, userEmail, userMobile, userPass, id, gender } = this.state
-
-            const acctoUpdate = { userName, userEmail, userMobile, userPass, gender}
-            //console.log("sdgfjhgf ID",id)
-            const url = `https://react-medical-app.firebaseio.com/addUser/${id}/.json`
-
-            const response = await Axios.put(url, acctoUpdate)
-            //console.log("response shfg ", response)
-
-            if (response.status === 200) {
-                this.handleClose()
-
-                const data = this.state.account
-                // solution 1
-                data.map((val) => {
-                    if (val.id === id) {
-                       //console.log("Val ", val)
-
-                        val.userName = userName
-                        val.userMobile = userMobile
-                        val.userEmail = userEmail
-                        val.userPass = userPass
-                        val.id = id
-                        val.gender=gender
-                        return val
-                    }
-                })
-                this.setState({
-                    show: false,
-                    account: data
-                })
-            }
-        }
-
-        catch (err) {
-            console.log("Error ", err)
-        }
-    }
-
+    
     render() {
         return (
             <div className='table-responsive container-fluid'>
@@ -144,7 +88,7 @@ export default class UserAccountView extends Component {
                             <th>Phone</th>
                             <th>Gender</th>
                             <th>Delete</th>
-                            <th>Update</th>
+                            {/* <th>Update</th> */}
                         </tr>
                     </thead>
                     <tbody>
@@ -157,8 +101,8 @@ export default class UserAccountView extends Component {
                                     <td>{account.gender}</td>
                                     <td><button className='btn-danger btn'
                                         onClick={() => { this.deleteAccount(account) }}>Delete</button></td>
-                                    <td><button className='btn-success btn'
-                                        onClick={() => this.handleShow(account)}>Edit</button></td>
+                                    {/* {this.state.isUser ? <td><button className='btn-success btn'
+                                        onClick={() => this.handleShow(account)}>Edit</button></td> : null} */}
 
                                 </tr>
                             )
@@ -166,7 +110,7 @@ export default class UserAccountView extends Component {
 
                     </tbody>
                 </table>
-                <Modal show={this.state.show} onHide={() => this.handleClose()}>
+                {/* <Modal show={this.state.show} onHide={() => this.handleClose()}>
                     <Modal.Header closeButton>
                         <Modal.Title>Updating Data</Modal.Title>
                     </Modal.Header>
@@ -212,7 +156,7 @@ export default class UserAccountView extends Component {
                                     <option >Male</option>
                                     <option>Female</option>
                                     <option>Other</option>
-                                    </select>
+                                </select>
                             </form>
                         </div>
                     </Modal.Body>
@@ -220,7 +164,7 @@ export default class UserAccountView extends Component {
                         <Button variant="secondary" onClick={() => this.handleClose()}>Close</Button>
                         <Button variant="primary" onClick={() => this.saveData()}>Save Changes </Button>
                     </Modal.Footer>
-                </Modal>
+                </Modal> */}
 
             </div>
         )

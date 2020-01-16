@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         [theme.breakpoints.up('md')]: {
             marginLeft: theme.spacing(1),
-            width: 'auto',
+            width: '100%',
         },
     },
     searchIcon: {
@@ -59,7 +59,7 @@ export default function Search(props) {
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
                             }}
-                            onChange={(e) => { props.inputs(e.target.value) }}
+                            onKeyUp={(e) => { props.inputSearch(e.target.value) }}
                             
                         />
                     </div>

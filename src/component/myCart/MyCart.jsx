@@ -5,8 +5,6 @@ import { useState } from 'react'
 export default function MyCart(props) {
     const uniqId = localStorage.getItem('id')
 
-
-    //const [quantiy, setQuantiy] = useState('')
     const [items, setItems] = useState({ allData: [] })
 
     useEffect(() => {
@@ -14,6 +12,7 @@ export default function MyCart(props) {
         getAllAccounts()
 
     }, [])
+
     // Getting data from server
     let getAllAccounts = async () => {
         const url = `https://react-magicshopping.firebaseio.com/users/${uniqId}/product.json`
@@ -80,9 +79,7 @@ export default function MyCart(props) {
     }
     let rs = 0;
     let tc = 0;
-    //let totalPrice;
-    //let netAmount = rs + totalPrice
-    //let itemTotal = rs;
+
 
     let handleClose = () => {
         
