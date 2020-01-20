@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 //import Container from '@material-ui/core/Container';
-import { Checkbox, InputLabel, Select } from '@material-ui/core';
+import { InputLabel, Select } from '@material-ui/core';
 import Axios from 'axios';
 
 function Copyright() {
@@ -375,6 +375,7 @@ export default function SignUp(props) {
                 <div className='card mt-3 card-body col-md-6'>
 
                     <h1 className='text-center'>Add Product</h1>
+                    
                     <Grid md={12} >
 
                         <form onSubmit={istrue} className={classes.form} noValidate>
@@ -426,9 +427,9 @@ export default function SignUp(props) {
 
                                     >
                                         {/* <option value='' disabled>Select Medicine Type</option> */}
-                                        <option value='tablet' selected>Tablet</option>
-                                        <option value='syrup'>Syrup</option>
-                                        <option value='powder'>Powder</option>
+                                        <option value='Tablet' selected>Tablet</option>
+                                        <option value='Syrup'>Syrup</option>
+                                        <option value='Powder'>Powder</option>
                                     </Select>
                                     <p style={{ color: 'red', fontSize: '12px' }}>{typeErr.typErr}</p>
 

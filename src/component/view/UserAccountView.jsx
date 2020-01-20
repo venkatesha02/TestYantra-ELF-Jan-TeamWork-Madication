@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
+import DeleteIcon from '@material-ui/icons/Delete';
 // import { Modal, Button } from 'react-bootstrap'
 
 export default class UserAccountView extends Component {
@@ -18,10 +19,7 @@ export default class UserAccountView extends Component {
     componentDidMount() {
         this.getAllAccounts()
     }
-
-
-
-
+    
     // Getting data from back-end using Axios api
     getAllAccounts = () => {
         const url = 'https://react-medical-app.firebaseio.com/addUser.json'
@@ -100,10 +98,7 @@ export default class UserAccountView extends Component {
                                     <td>{account.userMobile}</td>
                                     <td>{account.gender}</td>
                                     <td><button className='btn-danger btn'
-                                        onClick={() => { this.deleteAccount(account) }}>Delete</button></td>
-                                    {/* {this.state.isUser ? <td><button className='btn-success btn'
-                                        onClick={() => this.handleShow(account)}>Edit</button></td> : null} */}
-
+                                        onClick={() => { this.deleteAccount(account) }}><DeleteIcon/></button></td>
                                 </tr>
                             )
                         })}

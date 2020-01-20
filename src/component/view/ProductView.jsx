@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
 import { Modal, Button } from 'react-bootstrap'
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 export default class ProductView extends Component {
 
@@ -10,10 +12,9 @@ export default class ProductView extends Component {
         companyName: '',
         quantity: '',
         price: '',
-        productImage:'',
-        description:'',
-        type:''
-        
+        productImage: '',
+        description: '',
+        type: ''
     }
 
     componentDidMount() {
@@ -44,29 +45,30 @@ export default class ProductView extends Component {
     // Getting data from back-end using Axios api
     getAllAccounts = () => {
         const url = 'https://react-medical-app.firebaseio.com/addmedicine.json'
-        Axios.get(url)
-            .then((response) => {
-                //console.log("Response ", response)
-                let fetchedAccount = []
+        try {
+            let response = Axios.get(url)
+
+            //console.log("Response ", response)
+            let fetchedAccount = []
+            if (response.status === 200) {
                 for (let key in response.data) {
                     let account = response.data[key]
-                    //console.log('Direct data ', account)
 
                     fetchedAccount.push({
                         ...account,
                         id: key
                     })
 
-                    //console.log('ALl details', fetchedAccount)
                     this.setState({
                         account: fetchedAccount
                     })
                 }
+            }
 
-            })
-            .catch((err) => {
-                console.log("Erroo ", err)
-            })
+        }
+        catch (err) {
+            console.log("Erroo ", err)
+        }
     }
 
     async deleteAccount(accToDelete) {
@@ -75,7 +77,7 @@ export default class ProductView extends Component {
         const url = 'https://react-medical-app.firebaseio.com/addmedicine/' + id + '/.json'
 
         try {
-            const response = await Axios.delete(url)
+            await Axios.delete(url)
             const myAccount = [...this.state.account]
 
             const index = myAccount.indexOf(accToDelete)
@@ -96,11 +98,10 @@ export default class ProductView extends Component {
     saveData = async () => {
         console.log("State Data ", this.state)
         try {
-            
-           
+
             const { productName, companyName, quantity, price, productImage, description, type, id } = this.state
 
-            const acctoUpdate = { productName, companyName, quantity, price, productImage, description, type}
+            const acctoUpdate = { productName, companyName, quantity, price, productImage, description, type }
             //console.log("sdgfjhgf ID",id)
             const url = `https://react-medical-app.firebaseio.com/addmedicine/${id}/.json`
 
@@ -114,18 +115,19 @@ export default class ProductView extends Component {
                 // solution 1
                 data.map((val) => {
                     if (val.id === id) {
-                       //console.log("Val ", val)
+                        //console.log("Val ", val)
 
                         val.productName = productName
                         val.companyName = companyName
                         val.quantity = quantity
                         val.price = price
-                        val.productImage=productImage
-                        val.description=description
-                        val.type=type
+                        val.productImage = productImage
+                        val.description = description
+                        val.type = type
                         val.id = id
                         return val
                     }
+                    return val;
                 })
                 this.setState({
                     show: false,
@@ -161,7 +163,7 @@ export default class ProductView extends Component {
                             return (
                                 <tr key={account.id}>
                                     <td>
-                                        <img width='50px' height='50px' src={account.productImage} alt=""/>
+                                        <img width='50px' height='50px' src={account.productImage} alt="" />
                                     </td>
                                     <td>{account.productName}</td>
                                     <td>{account.companyName}</td>
@@ -170,9 +172,9 @@ export default class ProductView extends Component {
                                     <td>{account.description}</td>
                                     <td>{account.type}</td>
                                     <td><button className='btn-danger btn'
-                                        onClick={() => { this.deleteAccount(account) }}>Delete</button></td>
+                                        onClick={() => { this.deleteAccount(account) }}><DeleteIcon/></button></td>
                                     <td><button className='btn-success btn'
-                                        onClick={() => this.handleShow(account)}>Edit</button></td>
+                                        onClick={() => this.handleShow(account)}><EditIcon/></button></td>
 
                                 </tr>
                             )
@@ -180,6 +182,7 @@ export default class ProductView extends Component {
 
                     </tbody>
                 </table>
+                
                 <Modal show={this.state.show} onHide={() => this.handleClose()}>
                     <Modal.Header closeButton>
                         <Modal.Title>Updating Data</Modal.Title>
@@ -217,30 +220,30 @@ export default class ProductView extends Component {
                                     onChange={this.handleChange}
                                     value={this.state.price} required />
 
-                                    <label >Description</label>
+                                <label >Description</label>
                                 <input name="description"
                                     className="form-control" type="text"
                                     placeholder="Enter Description"
                                     onChange={this.handleChange}
                                     value={this.state.description} required />
 
-                                    <label >Product Image</label>
+                                <label >Product Image</label>
                                 <input name="productImage"
                                     className="form-control" type="text"
                                     placeholder="Enter Product Image"
                                     onChange={this.handleChange}
                                     value={this.state.productImage} required />
 
-                                    <label >Medicine Type</label>
+                                <label >Medicine Type</label>
                                 <select name="type"
-                                    className="form-control" 
+                                    className="form-control"
                                     onChange={this.handleChange}
                                     value={this.state.type} required>
                                     <option>Tablet</option>
                                     <option>Syrup</option>
                                     <option>Powder</option>
-                                    
-                                    </select>
+
+                                </select>
                             </form>
                         </div>
                     </Modal.Body>

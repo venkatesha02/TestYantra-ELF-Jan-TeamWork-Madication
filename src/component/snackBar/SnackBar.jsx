@@ -4,8 +4,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 //import Slide from '@material-ui/core/Slide';
 
 export default function SnackBar(props) {
-  const [open, setOpen] = React.useState(false);
-  const [transition, setTransition] = React.useState(undefined);
+  const [ setOpen] = React.useState(false);
+  const [transition] = React.useState(undefined);
 
 
   const handleClose = () => {

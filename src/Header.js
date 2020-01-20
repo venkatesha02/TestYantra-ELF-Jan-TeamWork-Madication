@@ -1,17 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom'
 import Home from './component/home/Home';
-import UserContext, { UserConsumer } from './context/userAuthentication';
+import { UserConsumer } from './context/userAuthentication';
 import CreateAccount from './component/createAccount/SignUp'
 import Login from './component/login/Sign-In'
 import AddProduct from './component/addProduct/Add-Medicine'
-import ShowProduct from './component/showProduct/ShowProduct';
+import UserTable from './component/editableTable/UserTable'
+// import ShowProduct from './component/showProduct/ShowProduct';
 import MyCart from './component/myCart/MyCart';
-import UserAccountView from './component/view/UserAccountView'
+// import UserAccountView from './component/view/UserAccountView'
 import ProductView from './component/view/ProductView'
 import MyAccount from './component/myAccount/MyAccount';
 import PlaceOrder from './component/orderPlace/PlaceOrder';
-import Checkout from './component/checkout/Checkout'
+// import Checkout from './component/checkout/Checkout'
+import DataTable from './component/editableTable/DataTable';
 // import Search from './component/search/Search';
 
 export default function Header(props) {
@@ -54,15 +56,21 @@ export default function Header(props) {
                                                             <Link className="nav-link" to='/showProduct'><i className="fa fa-binoculars">Product</i></Link>
                                                         </li>*/}
                                                         <li className="nav-item active ">
-                                                            <Link className="nav-link" to='/addProduct'><i>Add Product</i></Link>
+                                                            <Link className="nav-link" to='/addProduct'><i class="fa fa-layer-plus">Add Product</i></Link>
                                                         </li> 
-                                                        <li className="nav-item active ">
+                                                        {/* <li className="nav-item active ">
                                                             <Link className="nav-link" to='/userAccountView'><i className="fa fa-user">User List</i></Link>
-                                                         </li>
-                                                         <li className="nav-item active ">
-                                                             <Link className="nav-link" to='/productView'><i className="fa list">Products List</i></Link>
+                                                         </li> */}
+                                                        <li className="nav-item active ">
+                                                            <Link className="nav-link" to='/editProduct'><i class="fa fa-list-ul"> Edit Product </i></Link>
                                                          </li>
                                                         
+                                                         {/* <li className="nav-item active ">
+                                                             <Link className="nav-link" to='/productView'><i className="fa list">Products List</i></Link>
+                                                         </li> */}
+                                                         <li className="nav-item active ">
+                                                             <Link className="nav-link" to='/userList'><i className="fa fa-user">User List</i></Link>
+                                                         </li>
                                                         <li className="nav-item active ">
                                                             <Link className="nav-link" to='/myCart'><i className="fa fa-cart-plus">My cart</i></Link>
                                                         </li>
@@ -76,7 +84,7 @@ export default function Header(props) {
                                                     <ul className='navbar-nav'>
                                                         {/* <Link className="nav-link active" to='/' onClick={() => context.setLogin(false)}><i className="fa fa-sign-out"> Logout</i></Link> */}
                                                         <li className="nav-item active ">
-                                                            <Link className="nav-link" ><i className='fa'>Welcome {name}</i></Link>
+                                                            <p className='mt-2 mr-3'><i className='fa'>Welcome {name}</i></p>
                                                         </li>
                                                         <li>
                                                             <Link className="nav-link active" to='/' onClick={() => logout(context)}><i className="fa fa-sign-out">Logout</i></Link>
@@ -155,12 +163,14 @@ export default function Header(props) {
 
             {status ? <>
                 <Route path='/addProduct' component={AddProduct} />
-                {/* <Route path='/showProduct' component={ShowProduct} /> */}
+                <Route path='/editProduct' component={DataTable} />
                 <Route path='/myCart' component={MyCart} />
+                <Route path='/userList' component={UserTable} />
+
                 <Route path='/myAccount' component={MyAccount} />
                 <Route path='/placeOrder' component={PlaceOrder} />
-                <Route path='/checkout' component={Checkout} />
-                <Route path='/userAccountView' component={UserAccountView} />
+                {/* <Route path='/checkout' component={Checkout} /> */}
+                {/* <Route path='/userAccountView' component={UserAccountView} /> */}
                 <Route path='/productView' component={ProductView} />
 
             </> : <p style={{ display: 'none' }} className='col-md-4 col-sm-6 mt-5 offset-2'><img src='oops.png' alt='err' /></p>}

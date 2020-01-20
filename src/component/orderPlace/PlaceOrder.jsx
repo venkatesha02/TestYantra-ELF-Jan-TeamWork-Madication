@@ -4,7 +4,7 @@ import Axios from 'axios'
 export default function PlaceOrder(props) {
 
     const uniqId = localStorage.getItem('id')
-    const total = localStorage.getItem('total')
+    //const total = localStorage.getItem('total')
     const [items, setItems] = useState({ allData: [] })
 
     useEffect(() => {

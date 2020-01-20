@@ -20,6 +20,9 @@ export default function Home(props) {
 
     // Getting all data from server
     let getAllAccounts = async () => {
+        //http://192.168.43.106:8080/showproducts
+
+        //const url = `http://192.168.43.106:8080/showproducts`
         const url = `https://react-medical-app.firebaseio.com/addmedicine.json`
 
         try {
@@ -44,7 +47,7 @@ export default function Home(props) {
                         ...newData.allnew,
                         allnew: fetchedAccount
                     })
-
+                    console.log(items.all)
                 }
             }
         }
@@ -113,31 +116,31 @@ export default function Home(props) {
                 <div className="carousel-inner" role="listbox">
                     <div className="carousel-item">
                         <img src="http://bit.ly/2uRFyKN"
-                         width="100%" 
-                         className="d-block w-100" 
-                         height='300' 
-                         alt="Second slide" />
+                            width="100%"
+                            className="d-block w-100"
+                            height='300'
+                            alt="Second slide" />
                     </div>
                     <div className="carousel-item active">
-                        <img src="http://bit.ly/2QXDnOx" 
-                        width="100%" 
-                        className="d-block w-100" 
-                        height='300px' 
-                        alt="First slide" />
+                        <img src="http://bit.ly/2QXDnOx"
+                            width="100%"
+                            className="d-block w-100"
+                            height='300px'
+                            alt="First slide" />
                     </div>
                     <div className="carousel-item">
-                        <img src="http://bit.ly/2TvGsHc" 
-                        width="100%" 
-                        className="d-block w-100" 
-                        height='300px' 
-                        alt="Third slide" />
+                        <img src="http://bit.ly/2TvGsHc"
+                            width="100%"
+                            className="d-block w-100"
+                            height='300px'
+                            alt="Third slide" />
                     </div>
                     <div className="carousel-item">
-                        <img src="http://bit.ly/2Rz7Dyr" 
-                        width="100%" 
-                        className="d-block w-100" 
-                        height='300px' 
-                        alt="Third slide" />
+                        <img src="http://bit.ly/2Rz7Dyr"
+                            width="100%"
+                            className="d-block w-100"
+                            height='300px'
+                            alt="Third slide" />
                     </div>
                 </div>
                 <a className="carousel-control-prev" href="#carouselId" role="button" data-slide="prev">
@@ -153,51 +156,53 @@ export default function Home(props) {
             {items.all.map(val => {
 
                 return (
+                    <>
+                        <div className="ml-2 mt-3 card float-left" style={{ width: "18rem" }}>
+                            <div key={val.id} className="card-body">
+                                <img height='200px' src={val.productImage} className="card-img-top" alt="..." width='100%'></img>
+                                <h5 className="card-title">{val.pName}</h5>
+                                <p className='card-text'><h5>Rs. {val.price}</h5></p>
+                                <p className='card-text'><h6>Brand : {val.companyName}</h6></p>
+                                <p className='card-text'>{val.description}</p>
 
-                    <div className="ml-2 mt-3 card float-left" style={{ width: "18rem" }}>
-                        <div key={val.id} className="card-body">
-                            <img height='200px' src={val.productImage} class="card-img-top" alt="..." width='100%'></img>
-                            <h5 className="card-title">{val.productName}</h5>
-                            <p className='card-text'><h5>Rs. {val.price}</h5></p>
-                            <p className='card-text'><h6>Brand : {val.companyName}</h6></p>
-                            <p className='card-text'>{val.description}</p>
-
-                            {isLogin ?
-                                <>
-                                    <button style={{ background: 'orange', color: 'white' }} onClick={() => { props.history.push('/checkout') }} className="btn " >Buy Now</button>
-                                    <button style={{ background: 'blue', color: 'white' }} onClick={() => addTocart(val)} className="btn ml-5">Add to Cart</button>
-                                </>
-                                :
-                                <>
-                                    <button style={{ background: 'orange', color: 'white' }}
-                                        onClick={() => {
-                                            setOpen({ open: true, message: 'Please Login!!' })
-                                            setTimeout(() => {
-                                                setOpen({ open: false })
-                                                //props.history.push('/login')
-                                            }, 2000);
-                                        }}
-                                        className="btn ">
-                                            <AddShoppingCartIcon/>
+                                {isLogin ?
+                                    <>
+                                        <button style={{ background: 'orange', color: 'white' }} onClick={() => { props.history.push('/checkout') }} className="btn " >Buy Now</button>
+                                        <button style={{ background: 'blue', color: 'white' }} onClick={() => addTocart(val)} className="btn ml-5">Add to Cart</button>
+                                    </>
+                                    :
+                                    <>
+                                        <button style={{ background: 'orange', color: 'white' }}
+                                            onClick={() => {
+                                                setOpen({ open: true, message: 'Please Login!!' })
+                                                setTimeout(() => {
+                                                    setOpen({ open: false })
+                                                    //props.history.push('/login')
+                                                }, 2000);
+                                            }}
+                                            className="btn ">
+                                            <AddShoppingCartIcon />
                                             Buy Now
-                                    </button>
+                                        </button>
 
-                                    <button
-                                        style={{ background: 'blue', color: 'white' }}
-                                        onClick={() => {
-                                            setOpen({ open: true, message: 'Please Login!!' })
-                                            setTimeout(() => {
-                                                setOpen({ open: false })
-                                                //props.history.push('/login')
-                                            }, 2000);
-                                        }}
-                                        className="btn ml-5">Add to Cart
-                                    </button>
-                                </>
-                            }
+                                        <button
+                                            style={{ background: 'blue', color: 'white' }}
+                                            onClick={() => {
+                                                setOpen({ open: true, message: 'Please Login!!' })
+                                                setTimeout(() => {
+                                                    setOpen({ open: false })
+                                                    //props.history.push('/login')
+                                                }, 2000);
+                                            }}
+                                            className="btn ml-5">Add to Cart
+                                        </button>
 
+                                    </>
+                                }
+
+                            </div>
                         </div>
-                    </div>
+                    </>
                 )
             })}
         </>

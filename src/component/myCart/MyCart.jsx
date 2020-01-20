@@ -101,10 +101,15 @@ export default function MyCart(props) {
         //props.history.push('/placeOrder')
     }
 
+    let checkout =()=>{
+        props.history.push("/checkout")
+    }
+
     return (
         <>
             <div className='container' >
                 <h6>My Cart ({items.allData.length})</h6>
+                
                 <div className='row'>
                     <div className='col-md-6 col-sm-8 col-12 mt-2 float-left'>
                         {items.allData.map((val) => {
@@ -147,7 +152,7 @@ export default function MyCart(props) {
                             <p style={{ display: 'none' }}>{localStorage.setItem('total', rs)}</p>
 
                             <p className='card-text'><h5>Payable Amount : {rs}</h5></p>
-                            <button type="button" className='btn btn-outline-success ml-2' data-toggle="modal" onClick={() => { props.history.push("/checkout") }} data-target="#myModal">Place order</button>
+                            <button type="button" className='btn btn-outline-success ml-2' data-toggle="modal" onClick={checkout} data-target="#myModal">Place order</button>
 
                         </div>
                     </div>
