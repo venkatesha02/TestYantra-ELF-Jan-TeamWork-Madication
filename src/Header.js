@@ -13,6 +13,7 @@ import ProductView from './component/view/ProductView'
 import MyAccount from './component/myAccount/MyAccount';
 import PlaceOrder from './component/orderPlace/PlaceOrder';
 // import Checkout from './component/checkout/Checkout'
+import AddressForm from './component/checkout/AddressForm'
 import DataTable from './component/editableTable/DataTable';
 // import Search from './component/search/Search';
 
@@ -49,93 +50,96 @@ export default function Header(props) {
                                     if (status === 'true') {
 
                                         // if (context.user  /* && status === 'true'*/) {
-                                            return (
-                                                <>
-                                                    <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-                                                        {/*<li className="nav-item active ">
+                                        return (
+                                            <>
+                                                <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+                                                    {/*<li className="nav-item active ">
                                                             <Link className="nav-link" to='/showProduct'><i className="fa fa-binoculars">Product</i></Link>
                                                         </li>*/}
-                                                        <li className="nav-item active ">
-                                                            <Link className="nav-link" to='/addProduct'><i class="fa fa-layer-plus">Add Product</i></Link>
-                                                        </li> 
-                                                        {/* <li className="nav-item active ">
+                                                    <li className="nav-item active ">
+                                                        <Link className="nav-link" to='/addProduct'><i className="fa fa-layer-plus">Add Product</i></Link>
+                                                    </li>
+                                                    {/* <li className="nav-item active ">
                                                             <Link className="nav-link" to='/userAccountView'><i className="fa fa-user">User List</i></Link>
                                                          </li> */}
-                                                        <li className="nav-item active ">
-                                                            <Link className="nav-link" to='/editProduct'><i class="fa fa-list-ul"> Edit Product </i></Link>
-                                                         </li>
-                                                        
-                                                         {/* <li className="nav-item active ">
+                                                    <li className="nav-item active ">
+                                                        <Link className="nav-link" to='/editProduct'><i className="fa fa-list-ul"> Edit Product </i></Link>
+                                                    </li>
+
+                                                    {/* <li className="nav-item active ">
                                                              <Link className="nav-link" to='/productView'><i className="fa list">Products List</i></Link>
                                                          </li> */}
-                                                         <li className="nav-item active ">
-                                                             <Link className="nav-link" to='/userList'><i className="fa fa-user">User List</i></Link>
-                                                         </li>
-                                                        <li className="nav-item active ">
-                                                            <Link className="nav-link" to='/myCart'><i className="fa fa-cart-plus">My cart</i></Link>
-                                                        </li>
-                                                        <li className="nav-item active ">
-                                                            <Link className="nav-link" to='/myAccount'><i className="fa fa-user-circle">My Account</i></Link>
-                                                        </li>
-                                                        <li className="nav-item active ">
-                                                            <Link className="nav-link" to='/placeOrder'><i className="fa fa-bags-shopping">Placed Order</i></Link>
-                                                        </li>
-                                                    </ul>
-                                                    <ul className='navbar-nav'>
-                                                        {/* <Link className="nav-link active" to='/' onClick={() => context.setLogin(false)}><i className="fa fa-sign-out"> Logout</i></Link> */}
-                                                        <li className="nav-item active ">
-                                                            <p className='mt-2 mr-3'><i className='fa'>Welcome {name}</i></p>
-                                                        </li>
-                                                        <li>
-                                                            <Link className="nav-link active" to='/' onClick={() => logout(context)}><i className="fa fa-sign-out">Logout</i></Link>
-                                                        </li>
+                                                    <li className="nav-item active ">
+                                                        <Link className="nav-link" to='/userList'><i className="fa fa-user">User List</i></Link>
+                                                    </li>
+                                                    <li className="nav-item active ">
+                                                        <Link className="nav-link" to='/myCart'><i className="fa fa-cart-plus">My cart</i></Link>
+                                                    </li>
+                                                    <li className="nav-item active ">
+                                                        <Link className="nav-link" to='/myAccount'><i className="fa fa-user-circle">My Account</i></Link>
+                                                    </li>
+                                                    <li className="nav-item active ">
+                                                        <Link className="nav-link" to='/placeOrder'><i className="fa fa-bags-shopping">Placed Order</i></Link>
+                                                    </li>
+                                                </ul>
+                                                <ul className='navbar-nav'>
+                                                    {/* <Link className="nav-link active" to='/' onClick={() => context.setLogin(false)}><i className="fa fa-sign-out"> Logout</i></Link> */}
+                                                    <li className="nav-item active ">
+                                                        <p className='mt-2 mr-3'><i className='fa'>Welcome {name}</i></p>
+                                                    </li>
+                                                    <li>
+                                                        <Link className="nav-link active" to='/' onClick={() => logout(context)}><i className="fa fa-sign-out">Logout</i></Link>
+                                                    </li>
 
-                                                    </ul>
-                                                </>)
-                                        }
-                                        // else {
-                                        //     return (
-                                        //         <>
-                                        //             <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+                                                </ul>
+                                            </>)
+                                    }
+                                    // else {
+                                    //     return (
+                                    //         <>
+                                    //             <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
 
-                                        //                 <li className="nav-item active ">
-                                        //                     <Link className="nav-link" to='/addProduct'><i className="fa fa-plus-circle">Add Product</i></Link>
-                                        //                 </li>
-                                        //                  <li className="nav-item active ">
-                                        //                     <Link className="nav-link" to='/userAccountView'><i className="fa fa-user">User List</i></Link>
-                                        //                 </li>
-                                        //                 <li className="nav-item active ">
-                                        //                     <Link className="nav-link" to='/productView'><i className="fa list">Products List</i></Link>
-                                        //                 </li>
-                                        //                {/* <li className="nav-item active ">
-                                        //                     <Link className="nav-link" to='/myCart'><i className="fa fa-cart-plus">My cart</i></Link>
-                                        //                 </li> */}
-                                        //                 <li className="nav-item active ">
-                                        //                     <Link className="nav-link" to='/myAccount'><i className="fa fa-user-circle">My Account</i></Link>
-                                        //                 </li>
-                                        //                 {/* <li className="nav-item active ">
-                                        //                     <Link className="nav-link" to='/placeOrder'><i className="fa ">Placed Order</i></Link>
-                                        //                 </li> */}
-                                        //             </ul>
-                                        //             <ul className='navbar-nav'>
-                                        //                 {/* <Link className="nav-link active" to='/' onClick={() => context.setLogin(false)}><i className="fa fa-sign-out">Logout</i></Link> */}
-                                        //                 <li className="nav-item active ">
-                                        //                     <Link className="nav-link" ><i className='fa'>Welcome {name}</i></Link>
-                                        //                 </li>
-                                        //                 <li>
-                                        //                     <Link className="nav-link active" to='/' onClick={() => logout(context)}><i className="fa fa-sign-out">Logout</i></Link>
-                                        //                 </li>
-                                        //                 {/* <Link className="nav-link active" to='/' onClick={() => logout(context)}><i className="fa fa-sign-out">Logout</i></Link> */}
-                                        //             </ul>
-                                        //         </>
-                                        //     )
-                                        // }
+                                    //                 <li className="nav-item active ">
+                                    //                     <Link className="nav-link" to='/addProduct'><i className="fa fa-plus-circle">Add Product</i></Link>
+                                    //                 </li>
+                                    //                  <li className="nav-item active ">
+                                    //                     <Link className="nav-link" to='/userAccountView'><i className="fa fa-user">User List</i></Link>
+                                    //                 </li>
+                                    //                 <li className="nav-item active ">
+                                    //                     <Link className="nav-link" to='/productView'><i className="fa list">Products List</i></Link>
+                                    //                 </li>
+                                    //                {/* <li className="nav-item active ">
+                                    //                     <Link className="nav-link" to='/myCart'><i className="fa fa-cart-plus">My cart</i></Link>
+                                    //                 </li> */}
+                                    //                 <li className="nav-item active ">
+                                    //                     <Link className="nav-link" to='/myAccount'><i className="fa fa-user-circle">My Account</i></Link>
+                                    //                 </li>
+                                    //                 {/* <li className="nav-item active ">
+                                    //                     <Link className="nav-link" to='/placeOrder'><i className="fa ">Placed Order</i></Link>
+                                    //                 </li> */}
+                                    //             </ul>
+                                    //             <ul className='navbar-nav'>
+                                    //                 {/* <Link className="nav-link active" to='/' onClick={() => context.setLogin(false)}><i className="fa fa-sign-out">Logout</i></Link> */}
+                                    //                 <li className="nav-item active ">
+                                    //                     <Link className="nav-link" ><i className='fa'>Welcome {name}</i></Link>
+                                    //                 </li>
+                                    //                 <li>
+                                    //                     <Link className="nav-link active" to='/' onClick={() => logout(context)}><i className="fa fa-sign-out">Logout</i></Link>
+                                    //                 </li>
+                                    //                 {/* <Link className="nav-link active" to='/' onClick={() => logout(context)}><i className="fa fa-sign-out">Logout</i></Link> */}
+                                    //             </ul>
+                                    //         </>
+                                    //     )
+                                    // }
 
                                     //}
                                     else {
                                         return (
                                             <>
                                                 <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+                                                    <li className="nav-item active ">
+                                                        <Link className="nav-link" to=''>About us</Link>
+                                                    </li>
                                                 </ul>
                                                 <ul className="navbar-nav">
                                                     <li className="nav-item active ">
@@ -170,6 +174,7 @@ export default function Header(props) {
                 <Route path='/myAccount' component={MyAccount} />
                 <Route path='/placeOrder' component={PlaceOrder} />
                 {/* <Route path='/checkout' component={Checkout} /> */}
+                <Route path='/addressForm' component={AddressForm} />
                 {/* <Route path='/userAccountView' component={UserAccountView} /> */}
                 <Route path='/productView' component={ProductView} />
 

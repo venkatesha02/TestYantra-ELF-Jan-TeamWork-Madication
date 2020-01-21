@@ -497,12 +497,6 @@ export default function SignUp(props) {
                                     <p style={{ color: 'red', fontSize: '12px' }}>{productImageErr.proImgErr}</p>
                                 </Grid>
 
-                                {/* <Grid item xs={6}>
-                                    <FormControlLabel
-                                        control={<Checkbox value="remember" color="primary" />}
-                                        label="Terms and condition"
-                                    />
-                                </Grid> */}
                             </Grid>
 
                             <Button

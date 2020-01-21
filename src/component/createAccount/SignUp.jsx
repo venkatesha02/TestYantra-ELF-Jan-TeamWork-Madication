@@ -240,6 +240,7 @@ export default function SignUp(props) {
         if (event.target.name === 'userPass') {
 
             if (userPass.match(/^.*(?=.{5,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/) && userPass !== "") {
+                
                 setUserPassErr({
                     ...userPassErr,
                     passErr: '',

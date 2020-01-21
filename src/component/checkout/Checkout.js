@@ -128,6 +128,7 @@ export default function Checkout() {
                     variant="contained"
                     color="primary"
                     onClick={handleNext}
+                    
                     className={classes.button}
                   >
                     {activeStep === steps.length - 1 ? 'Place order' : 'Next'}

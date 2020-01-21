@@ -1,12 +1,17 @@
 import React, { useEffect } from 'react'
 import Axios from 'axios'
 import { useState } from 'react'
+import SnackBar from '../snackBar/SnackBar';
+
 
 export default function MyCart(props) {
     //const uniqId = localStorage.getItem('id')
     const mobile = localStorage.getItem('mobile')
 
     const [items, setItems] = useState({ allData: [] })
+
+    const [open, setOpen] = useState({ open: false, message: '' })
+
 
     useEffect(() => {
 
@@ -55,6 +60,7 @@ export default function MyCart(props) {
                 return (val1.noq = qunt,
                     val1.total = qunt * val1.price)
             }
+            return val
         })
         setItems({
             ...items.allData,
@@ -93,21 +99,35 @@ export default function MyCart(props) {
     let rs = 0;
     let tc = 0;
 
-    let handleClose = () => {
+    let checkout = () => {
 
-        items.allData.map((val) => {
-            removeCart(val)
-        })
-        //props.history.push('/placeOrder')
+        // items.allData.map((val) => {
+        //     removeCart(val)
+        // })
+        if(items.allData.length !== 0){
+            
+            console.log('Going to billing')
+           props.history.push('/checkout')
+
+        }
+        else{
+            setOpen({
+                open: true,
+                message: 'Cart is Empty'
+            })
+            setTimeout(() => {
+                setOpen({ open: false })
+            }, 2000);
+           // console.log('Cart is empty')
+
+        }
     }
 
-    let checkout =()=>{
-        props.history.push("/checkout")
-    }
 
     return (
         <>
             <div className='container' >
+                <SnackBar open={open.open} message={open.message}/>
                 <h6>My Cart ({items.allData.length})</h6>
                 
                 <div className='row'>
@@ -127,7 +147,7 @@ export default function MyCart(props) {
 
                                             <p style={{ display: 'none' }}>{rs = rs + Number(val.total), tc = tc + Number(val.price)}</p>
 
-                                            <select className="form-control col-md-4" value={val.quantity} onChange={(e) => { qut(e.target.value, val) }} name='quantity' required>
+                                            <select className="form-control col-md-4" onChange={(e) => { qut(e.target.value, val) }} name='quantity' required>
                                                 <option disabled >Quantity</option>
                                                 <option value='1' selected>1</option>
                                                 <option value='2'>2</option>
@@ -152,32 +172,10 @@ export default function MyCart(props) {
                             <p style={{ display: 'none' }}>{localStorage.setItem('total', rs)}</p>
 
                             <p className='card-text'><h5>Payable Amount : {rs}</h5></p>
-                            <button type="button" className='btn btn-outline-success ml-2' data-toggle="modal" onClick={checkout} data-target="#myModal">Place order</button>
+                            <button type="button" className='btn btn-outline-success ml-2' onClick={checkout}>Place order</button>
 
                         </div>
                     </div>
-
-                    <div class="modal fade" id="myModal" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Your order Placed Successfully </p>
-                                    <p>Thank you! </p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" onClick={handleClose} class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-
-
-
 
                 </div>
             </div>

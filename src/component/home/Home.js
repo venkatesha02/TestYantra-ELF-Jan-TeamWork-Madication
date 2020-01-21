@@ -47,8 +47,8 @@ export default function Home(props) {
                         ...newData.allnew,
                         allnew: fetchedAccount
                     })
-                    console.log(items.all)
                 }
+                //console.log(items.all)
             }
         }
         catch (err) {
@@ -69,7 +69,7 @@ export default function Home(props) {
         }
 
         if (arr) {
-            console.log(arr)
+            //console.log(arr)
             setItems({
                 ...items.all,
                 all: arr
@@ -167,12 +167,13 @@ export default function Home(props) {
 
                                 {isLogin ?
                                     <>
-                                        <button style={{ background: 'orange', color: 'white' }} onClick={() => { props.history.push('/checkout') }} className="btn " >Buy Now</button>
+                                        <button style={{ background: 'orange', color: 'white' }} onClick={() => { props.history.push('/addressForm') }} className="btn " >Buy Now</button>
                                         <button style={{ background: 'blue', color: 'white' }} onClick={() => addTocart(val)} className="btn ml-5">Add to Cart</button>
                                     </>
                                     :
                                     <>
-                                        <button style={{ background: 'orange', color: 'white' }}
+                                        <button
+                                            style={{ background: 'orange', color: 'white' }}
                                             onClick={() => {
                                                 setOpen({ open: true, message: 'Please Login!!' })
                                                 setTimeout(() => {
