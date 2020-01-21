@@ -93,11 +93,28 @@ export default function AddressForm(props) {
     if (event.target.name === 'firstName') {
 
       if (firstName.trim().match(/^[a-zA-Z ]*$/) && firstName !== '') {
-        setFnameErr({
-          ...setFnameErr,
-          fnameErr: '',
-          fErr: false
-        })
+
+        if (firstName.length > 20) {
+          setFnameErr({
+            ...setFnameErr,
+            fnameErr: 'maximun 20 Characters Only',
+            fErr: true
+          })
+        }
+        else if (firstName.length < 3) {
+          setFnameErr({
+            ...setFnameErr,
+            fnameErr: 'manimum 3 Characters Only',
+            fErr: true
+          })
+        }
+        else {
+          setFnameErr({
+            ...setFnameErr,
+            fnameErr: '',
+            fErr: false
+          })
+        }
       }
       else {
         setFnameErr({
@@ -119,11 +136,27 @@ export default function AddressForm(props) {
     if (event.target.name === 'lastName') {
 
       if (lastName.trim().match(/^[a-zA-Z ]*$/) && lastName !== '') {
-        setLnameErr({
-          ...setLnameErr,
-          lnameErr: '',
-          lErr: false
-        })
+        if (lastName.length > 20) {
+          setLnameErr({
+            ...setLnameErr,
+            lnameErr: 'maximun 20 Characters Only',
+            lErr: true
+          })
+        }
+        else if (lastName.length < 3) {
+          setLnameErr({
+            ...setLnameErr,
+            lnameErr: 'manimum 3 Characters Only',
+            lErr: true
+          })
+        }
+        else {
+          setLnameErr({
+            ...setLnameErr,
+            lnameErr: '',
+            lErr: false
+          })
+        }
       }
       else {
         setLnameErr({
@@ -151,10 +184,17 @@ export default function AddressForm(props) {
           mErr: false
         })
       }
+      else if (!userMobile.match(/^[0-9]*$/)) {
+        setUserMobileErr({
+          ...userMobileErr,
+          mobileErr: 'Should be Number',
+          mErr: true
+        })
+      }
       else {
         setUserMobileErr({
           ...userMobileErr,
-          mobileErr: 'Should be Number, only 10 digits',
+          mobileErr: 'Enter Only 10 digits',
           mErr: true
         })
       }
@@ -170,20 +210,32 @@ export default function AddressForm(props) {
     if (event.target.name === 'address1') {
 
       if (address1.trim().match(/^[a-zA-Z ]*$/) && address1 !== '') {
-        setAddressErr({
-          ...setAddressErr,
-          addErr: '',
-          aErr: false
-        })
+        
+        if (address1.length > 50) {
+          setAddressErr({
+            ...setAddressErr,
+            addErr: 'Maximum 50 Characters only',
+            aErr: true
+          })
+        }
+        
+        else {
+          setAddressErr({
+            ...setAddressErr,
+            addErr: '',
+            aErr: false
+          })
+        }
       }
+
       else {
         setAddressErr({
           ...setAddressErr,
           addErr: 'only Characters are Allowed',
           aErr: true
         })
-
       }
+
       if (address1 === '') {
         setAddressErr({
           ...setAddressErr,

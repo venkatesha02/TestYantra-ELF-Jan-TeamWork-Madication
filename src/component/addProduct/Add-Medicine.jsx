@@ -178,6 +178,7 @@ export default function SignUp(props) {
                 })
 
             }
+
             else {
                 setCompanyNameErr({
                     ...companyNameErr,
@@ -185,6 +186,7 @@ export default function SignUp(props) {
                     cErr: true
                 })
             }
+
             if (companyName === '') {
                 setCompanyNameErr({
                     ...companyNameErr,
@@ -203,6 +205,7 @@ export default function SignUp(props) {
                     qErr: false
                 })
             }
+
             else {
                 setQuantityErr({
                     ...quantityErr,
@@ -210,6 +213,7 @@ export default function SignUp(props) {
                     qErr: true
                 })
             }
+
             if (quantity === '') {
                 setQuantityErr({
                     ...quantityErr,
@@ -228,6 +232,7 @@ export default function SignUp(props) {
                     tErr: false
                 })
             }
+
             else {
                 setTypeErr({
                     ...typeErr,
@@ -235,6 +240,7 @@ export default function SignUp(props) {
                     tErr: true
                 })
             }
+
             if (type === '') {
                 setTypeErr({
                     ...typeErr,
@@ -247,7 +253,7 @@ export default function SignUp(props) {
 
         if (event.target.name === 'price') {
 
-            if (price.trim().match(/(\d+\.\d{1,2})/g) || price.trim().match(/^[0-9]+$/)) {
+            if (price.trim().match(/(\d+\.\d{1,2})/g) || price.trim().match(/^[0-9]+$/) ) {
                 if (price !== "") {
                     setPriceErr({
                         ...priceErr,
@@ -256,6 +262,7 @@ export default function SignUp(props) {
                     })
                 }
             }
+
             else {
                 setPriceErr({
                     ...priceErr,
@@ -263,6 +270,7 @@ export default function SignUp(props) {
                     pErr: true,
                 })
             }
+
             if (price === '') {
                 setPriceErr({
                     ...priceErr,
